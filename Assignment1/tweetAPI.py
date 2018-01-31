@@ -9,10 +9,10 @@ import json
 
 
 #Twitter API credentials
-consumer_key = "4nh1g0pVxZIfebASTXYL8Cf7E"
-consumer_secret = "69wL6UDWA0nVmjyZCJjOjkza3HroLgWlgEAV4crnTA1tMSUpdd"
-access_key = "217206877-wtmhPBHNL5FGKAgKsDUUAEwCjYvu9yjVYtZqIYID"
-access_secret = "txWd16tYMusJM4Vugg5M6ZIqMVT3zkCuCRyw1ZSi5wJ5F"
+consumer_key = "you keys"
+consumer_secret = "Secret"
+access_key = "accesskey "
+access_secret = "Woah that's another secret"
 
 
 def get_all_tweets(screen_name):
@@ -75,4 +75,4 @@ if __name__ == '__main__':
     api.destroy_status(407458679404134401)
     #api.
     #pass in the username of the account you want to download
-    get_all_tweets("@vikramgarhwal31")
+    get_all_tweets("@dontuseme")
