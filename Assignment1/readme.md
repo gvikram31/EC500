@@ -8,7 +8,7 @@ Some of the python libraries needed to run this project.
 - Google Cloud Vision API(pip install --upgrade google-cloud-vision).
 Now Tweety Google Cloud API will need your credentials to access information from your twitter account by following steps here.
 
-For Tweety put your credential information into tweetDownload.py.
+For Tweety put your credential information into run.py.
  
  Get your Google Vision API Credentials following steps here[https://cloud.google.com/vision/docs/auth]. Download the .json.  authentication file, Rename it as google_key.json. and put it in the code folder.
  
