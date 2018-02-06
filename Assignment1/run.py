@@ -21,7 +21,7 @@ def parse_arguments():
   parser.add_argument('--num', type=int, default=100, help='Maximum number of tweets to be returned.')
   parser.add_argument('--retweets', default=False, action='store_true', help='Include retweets')
   parser.add_argument('--replies', default=False, action='store_true', help='Include replies')
-  parser.add_argument('--output', default='../pictures/', type=str, help='folder where the pictures will be stored')
+  parser.add_argument('--output', default='pictures/', type=str, help='folder where the pictures will be stored')
 
   args = parser.parse_args()
   return args
