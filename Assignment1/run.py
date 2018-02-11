@@ -10,14 +10,10 @@ import glob
 import google.cloud.vision
 import subprocess
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "google_key.json"
-consumer_key = "7eKBIozkfYOz279pOBvCymtc6"
-consumer_secret = "yo1tg7geqbzDeEtYtLB1UoAbaoXcOrRIlJlb9EHyl7N0AnUwXs"
-access_key = "217206877-Nwj2Xjg5QdnYwTGq21EmHoqebQkGsoFoNOgKf3OQ"
-access_secret = "3ZU7YF5X5LhNm2QF8KwGbZhKpIcM9kd7KvEDleewD5QwM"
-# consumer_key = "GET THESE KEYS from Twitter"
-# consumer_secret = "GET THESE KEYS from Twitter"
-# access_key = "GET THESE KEYS from Twitter"
-# access_secret = "GET THESE KEYS from Twitter"
+consumer_key = "GET THESE KEYS from Twitter"
+consumer_secret = "GET THESE KEYS from Twitter"
+access_key = "GET THESE KEYS from Twitter"
+access_secret = "GET THESE KEYS from Twitter"
 # export GOOGLE_APPLICATION_CREDENTIALS = "/home/mjhuria/Desktop/google_key.json"
 Link = []
 # TODO: Limit by number of tweets?
@@ -77,7 +73,6 @@ def download_images(api, username, num_tweets, output_folder, frm_rate):
     tweets = api.user_timeline(screen_name=username, count=num_tweets)
     if not os.path.exists(output_folder):
         os.makedirs(output_folder)
-
     downloaded = 0
     while (len(tweets) != 0):
         last_id = tweets[-1].id
@@ -91,7 +86,6 @@ def download_images(api, username, num_tweets, output_folder, frm_rate):
                 downloaded += 1
         tweets = api.user_timeline(
             screen_name=username, count=num_tweets, max_id=last_id - 1)
-    # path = output_folder - "/"
     ConverttoVideo(output_folder, frm_rate)
 
 
