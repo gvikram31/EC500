@@ -10,10 +10,6 @@ import glob
 import google.cloud.vision
 import subprocess
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "google_key.json"
-consumer_key = "7eKBIozkfYOz279pOBvCymtc6"
-consumer_secret = "yo1tg7geqbzDeEtYtLB1UoAbaoXcOrRIlJlb9EHyl7N0AnUwXs"
-access_key = "217206877-Nwj2Xjg5QdnYwTGq21EmHoqebQkGsoFoNOgKf3OQ"
-access_secret = "3ZU7YF5X5LhNm2QF8KwGbZhKpIcM9kd7KvEDleewD5QwM"
 # consumer_key = "GET THESE KEYS from Twitter"
 # consumer_secret = "GET THESE KEYS from Twitter"
 # access_key = "GET THESE KEYS from Twitter"
