@@ -10,10 +10,10 @@ import glob
 import google.cloud.vision
 import subprocess
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "google_key.json"
-consumer_key = "GET THESE KEYS from Twitter"
-consumer_secret = "GET THESE KEYS from Twitter"
-access_key = "GET THESE KEYS from Twitter"
-access_secret = "GET THESE KEYS from Twitter"
+# consumer_key = "GET THESE KEYS from Twitter"
+# consumer_secret = "GET THESE KEYS from Twitter"
+# access_key = "GET THESE KEYS from Twitter"
+# access_secret = "GET THESE KEYS from Twitter"
 # export GOOGLE_APPLICATION_CREDENTIALS = "/home/mjhuria/Desktop/google_key.json"
 Link = []
 # TODO: Limit by number of tweets?
