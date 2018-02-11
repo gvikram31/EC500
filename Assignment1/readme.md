@@ -15,4 +15,5 @@ For Tweety put your credential information into run.py.
  
  Get your tweeter API credential using this link:-https://www.slickremix.com/docs/how-to-get-api-keys-and-tokens-for-twitter/.
 
-#To run the code:- Open terminal and write "chmod +x all.sh" then type "./all.sh twitterhandle_youwant numoftweets". Which will get the tweet images from your mentioned twitter handle,store them in "pictures" folder, create a video of them while analyzing these images. 
+#To run the code:- python run.py --number_of_tweets --folder_name_where_you_want_images_and_Video_to_be_stored --frames_per_seconds twitter_handle_name_with_@
+ - Example:- python run.py --num 20 --output pictures/ --fps 25 @andresiniesta8 
