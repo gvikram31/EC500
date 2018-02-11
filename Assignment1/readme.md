@@ -16,3 +16,5 @@ Get your Google Vision API Credentials following steps here[https://cloud.google
 # Command to run the code- 
   - python run.py --number_of_tweets --folder_name_where_you_want_images_and_Video_to_be_stored --frames_per_seconds     twitter_handle_name_with_@
  - Example:- python run.py --num 20 --output pictures/ --fps 25 @andresiniesta8 
+ 
+ This program will also generate a label.json file where all labels from images will be stored.
