@@ -8,28 +8,42 @@ import configparser
 import io
 import glob
 import google.cloud.vision
-consumer_key = "GET THESE KEYS from Twitter"
-consumer_secret = "GET THESE KEYS from Twitter"
-access_key = "GET THESE KEYS from Twitter"
-access_secret = "GET THESE KEYS from Twitter"
+import subprocess
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "google_key.json"
+consumer_key = "7eKBIozkfYOz279pOBvCymtc6"
+consumer_secret = "yo1tg7geqbzDeEtYtLB1UoAbaoXcOrRIlJlb9EHyl7N0AnUwXs"
+access_key = "217206877-Nwj2Xjg5QdnYwTGq21EmHoqebQkGsoFoNOgKf3OQ"
+access_secret = "3ZU7YF5X5LhNm2QF8KwGbZhKpIcM9kd7KvEDleewD5QwM"
+# consumer_key = "GET THESE KEYS from Twitter"
+# consumer_secret = "GET THESE KEYS from Twitter"
+# access_key = "GET THESE KEYS from Twitter"
+# access_secret = "GET THESE KEYS from Twitter"
 # export GOOGLE_APPLICATION_CREDENTIALS = "/home/mjhuria/Desktop/google_key.json"
 Link = []
-#TODO: Limit by number of tweets?
-def parse_arguments():
-  parser = argparse.ArgumentParser(description='Download pictures from a Twitter feed.')
-  parser.add_argument('username', type=str, help='The twitter screen name from the account we want to retrieve all the pictures')
-  parser.add_argument('--num', type=int, default=100, help='Maximum number of tweets to be returned.')
-  parser.add_argument('--retweets', default=False, action='store_true', help='Include retweets')
-  parser.add_argument('--replies', default=False, action='store_true', help='Include replies')
-  parser.add_argument('--output', default='pictures/', type=str, help='folder where the pictures will be stored')
+# TODO: Limit by number of tweets?
 
-  args = parser.parse_args()
-  return args
+
+def parse_arguments():
+    parser = argparse.ArgumentParser(
+        description='Download pictures from a Twitter feed.')
+    parser.add_argument(
+        'username', type=str, help='The twitter screen name from the account we want to retrieve all the pictures')
+    parser.add_argument('--num', type=int, default=100,
+                        help='Maximum number of tweets to be returned.')
+    parser.add_argument('--output', default='pictures/', type=str,
+                        help='folder where the pictures will be stored')
+    parser.add_argument('--fps', type=int, default=20,
+                        help='Frame rate per seconds for the video')
+
+    args = parser.parse_args()
+    return args
+
 
 def parse_config(config_file):
-  config = configparser.ConfigParser()
-  config.read(config_file)
-  return config
+    config = configparser.ConfigParser()
+    config.read(config_file)
+    return config
+
 
 @classmethod
 def parse(cls, api, raw):
@@ -37,41 +51,55 @@ def parse(cls, api, raw):
     setattr(status, 'json', json.dumps(raw))
     return status
 
+
 def init_tweepy():
-  # Status() is the data model for a tweet
-  tweepy.models.Status.first_parse = tweepy.models.Status.parse
-  tweepy.models.Status.parse = parse
-  # User() is the data model for a user profil
-  tweepy.models.User.first_parse = tweepy.models.User.parse
-  tweepy.models.User.parse = parse
+    # Status() is the data model for a tweet
+    tweepy.models.Status.first_parse = tweepy.models.Status.parse
+    tweepy.models.Status.parse = parse
+    # User() is the data model for a user profil
+    tweepy.models.User.first_parse = tweepy.models.User.parse
+    tweepy.models.User.parse = parse
 
-def authorise_twitter_api(config):
-  auth = OAuthHandler(consumer_key, consumer_secret)
-  auth.set_access_token(access_key, access_secret)
-  return auth
 
-def download_images(api, username, retweets, replies, num_tweets, output_folder):
-  tweets = api.user_timeline(screen_name=username, count=20, include_rts=retweets, exclude_replies=replies)
-  if not os.path.exists(output_folder):
-      os.makedirs(output_folder)
+def authorise_twitter_api():
+    auth = OAuthHandler(consumer_key, consumer_secret)
+    auth.set_access_token(access_key, access_secret)
+    return auth
 
-  downloaded = 0
-  while (len(tweets) != 0):
-    last_id = tweets[-1].id
 
-    for status in tweets:
-      media = status.entities.get('media', [])
-      if(len(media) > 0 and downloaded < num_tweets):
-        Link = media[0]['media_url']
-        wget.download(media[0]['media_url'],out=output_folder+str(downloaded)+'.jpg')
-        downloaded += 1
+def ConverttoVideo(output, frm_rate):
+    ffmpeg_command = ["ffmpeg", "-y", "-framerate", str(frm_rate), "-i", output + '/' + "%d.jpg", "-vf",
+                      "scale=w=1280:h=720:force_original_aspect_ratio=1,pad=1280:720:(ow-iw)/2:(oh-ih)/2", "-vcodec", "libx264", output + '/' + "TwitterVideo.mp4"]
+    subprocess.call(ffmpeg_command)
 
-    tweets = api.user_timeline(screen_name=username, count=20, include_rts=retweets, exclude_replies=replies, max_id=last_id-1)
+
+def download_images(api, username, num_tweets, output_folder, frm_rate):
+    tweets = api.user_timeline(screen_name=username, count=num_tweets)
+    if not os.path.exists(output_folder):
+        os.makedirs(output_folder)
+
+    downloaded = 0
+    while (len(tweets) != 0):
+        last_id = tweets[-1].id
+
+        for status in tweets:
+            media = status.entities.get('media', [])
+            if(len(media) > 0 and downloaded < num_tweets):
+                Link = media[0]['media_url']
+                wget.download(
+                    media[0]['media_url'], out=output_folder + '/' + str(downloaded) + '.jpg')
+                downloaded += 1
+        tweets = api.user_timeline(
+            screen_name=username, count=num_tweets, max_id=last_id - 1)
+    # path = output_folder - "/"
+    ConverttoVideo(output_folder, frm_rate)
+
 
 def doAnalysis(output):
     vision_client = google.cloud.vision.ImageAnnotatorClient()
-    print(output+'*.jpg')
-    for files in glob.glob(output+'*.jpg'):
+    # print(output+'*.jpg')
+    descp = []
+    for files in glob.glob(output + '/' + '*.jpg'):
         img1 = files
         with io.open(img1, 'rb') as image_file:
             content = image_file.read()
@@ -79,23 +107,26 @@ def doAnalysis(output):
         response = vision_client.label_detection(image=image)
         web_detect = vision_client.web_detection(image=image).web_detection
         for entity in web_detect.web_entities:
+            descp.append(entity.description)
             print('Description: {}'.format(entity.description))
+    with open('labels.json', 'w') as outfile:
+        json.dump(descp, outfile, indent=4, sort_keys=True)
+
 
 def main():
-  arguments = parse_arguments()
-  username = arguments.username
-  retweets = arguments.retweets
-  replies = arguments.replies
-  num_tweets = 20
-  output_folder = arguments.output
+    arguments = parse_arguments()
+    username = arguments.username
+    num_tweets = arguments.num
+    output_folder = arguments.output
+    frm_rate = arguments.fps
+    auth = authorise_twitter_api()
+    #wait rate limit to be set to true optherwise tweeter limits the number\
+    #of tweets that can be checked.
+    api = tweepy.API(auth, wait_on_rate_limit=True)
+#call for download images
+    download_images(api, username, num_tweets, output_folder, frm_rate)
+    analysis = doAnalysis(output_folder)
 
-  config = parse_config('../config.cfg')
-  auth = authorise_twitter_api(config)
-  api = tweepy.API(auth)
 
-  download_images(api, username, retweets, replies, num_tweets, output_folder)
-  print(Link)
-  analysis = doAnalysis(output_folder)
-
-if __name__=='__main__':
+if __name__ == '__main__':
     main()
