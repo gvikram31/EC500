@@ -16,5 +16,7 @@ Get your Google Vision API Credentials following steps here[https://cloud.google
 # Command to run the code- 
   - python run.py --number_of_tweets --folder_name_where_you_want_images_and_Video_to_be_stored --frames_per_seconds     twitter_handle_name_with_@
  - Example:- python run.py --num 20 --output pictures/ --fps 25 @andresiniesta8 
+ - Run "python run.py -h" for help with this program. 
+ - This program will need username as a must input. All other inputs are optional, they will be used default if not provided by the user. Number of tweets will be assumed as 100 by default, outfolder folder will named as "pictures" and frame rate will be 20.
  
  This program will also generate a label.json file where all labels from images will be stored.
