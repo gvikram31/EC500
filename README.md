@@ -1,22 +1,22 @@
-# APIs Homework
+# Testing @gvikram31's API
 
-This is the API homework for EC500. This project grabs images from a tweeter handler and analyze the images using Google Vision API to recognize products in the images.
-Following python libraries are needed to run this project:-
-- wget(pip install wget)
-- Tweepy(pip install tweepy)
-- FFMPEG(Command for Linux:- sudo apt install ffmpeg)
-- Google Cloud Vision API(pip install --upgrade google-cloud-vision).
+## test.py
+This file contains 3 tests to test the API. In order to use, comment all but one out. The tests are as follows:
+ 1. Regular test. Retrieves tweets from National Geographic (@NatGeo). This was successful! 
+ 2. Tries to test program with a twitter handle with no pictures. This was successful!
+ 3. Tries to test program with an invalid twitter handle. This was successful! 
+ 
+## Code Review
+The code review has been finished. All review comments regarding the API are under the 'Issues' section. 7 code review issues have been found.
+ 1. Exception Handling - Number of Tweets
+ 2. Unicode Error
+ 3. Comments
+ 4. Writing image name to file
+ 5. Long runtime
+ 6. Running program multiple times leaves old images
+ 7. Program freezes
+ 
+Program performance is synchronus. All descriptions are written to terminal and file after the images are downloaded and the video has been made. 
 
-Now Tweety Google Cloud API will need your credentials to access information from your twitter account by following steps here[https://www.slickremix.com/docs/how-to-get-api-keys-and-tokens-for-twitter/].
+## Website
 
-For Tweety put your credential information into run.py.
- 
-Get your Google Vision API Credentials following steps here[https://cloud.google.com/vision/docs/auth]. Download the .json.  authentication file, Rename it as "google_key.json". and put it in the code folder.
- 
-# Command to run the code- 
-  - python run.py --number_of_tweets --folder_name_where_you_want_images_and_Video_to_be_stored --frames_per_seconds     twitter_handle_name_with_@
- - Example:- python run.py --num 20 --output pictures/ --fps 25 @andresiniesta8 
- - Run "python run.py -h" for help with this program. 
- - This program will need username as a must input. All other inputs are optional, they will be used default if not provided by the user. Number of tweets will be assumed as 100 by default, outfolder folder will named as "pictures" and frame rate will be 20.
- 
- This program will also generate a label.json file where all labels from images will be stored.
