@@ -9,11 +9,12 @@ import io
 import glob
 import google.cloud.vision
 import subprocess
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "google_key.json"
-consumer_key = "GET THESE KEYS from Twitter"
-consumer_secret = "GET THESE KEYS from Twitter"
-access_key = "GET THESE KEYS from Twitter"
-access_secret = "GET THESE KEYS from Twitter"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "/Users/shivanibhatia/EC500-google.json"
+
+consumer_key = "i9KmpNAI22WYysSczCPievhln"
+consumer_secret = "bnCJZIE9h8tE55KlnZjV48RvEdsNW4pdPSgl7ddroUSKTDvEXY"
+access_key = "956290315689824256-Gv1H4JNuoWZPlBSDo6dp1ui0kOatK7h"
+access_secret = "AxrmezyWatl68QWQ2nf6D3bULIe366aL4oHb3JUC8oQ8H"
 # export GOOGLE_APPLICATION_CREDENTIALS = "/home/mjhuria/Desktop/google_key.json"
 Link = []
 # TODO: Limit by number of tweets?
@@ -102,7 +103,8 @@ def doAnalysis(output):
         web_detect = vision_client.web_detection(image=image).web_detection
         for entity in web_detect.web_entities:
             descp.append(entity.description)
-            print('Description: {}'.format(entity.description))
+            print('Description: {}'.format(entity.description.encode("utf-8")))
+
     with open('labels.json', 'w') as outfile:
         json.dump(descp, outfile, indent=4, sort_keys=True)
 
