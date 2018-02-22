@@ -10,7 +10,7 @@ def form():
 @website.route('/', methods=['POST'])
 def form_post():
     auth = apiExercise.authorise_twitter_api()
-    api = apiExercise.tweepy.API(auth, wait_on_rate_limit=True)
+    api = apiExercise.tweepy.API(auth)#, wait_on_rate_limit=True)
         
     try:
         user = request.form['username']
@@ -22,6 +22,7 @@ def form_post():
         
     except Exception as e:
         print(str(e))
+        return render_template('index.html')
 
     else:
         if (isValid):
