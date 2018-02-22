@@ -1,42 +1,39 @@
 from flask import Flask, redirect, render_template, request, url_for
-import run as apiExerise
+import run as apiExercise
 
 website = Flask(__name__)
 
 @website.route('/')
 def form():
-    return render_template("index.html")
+    return render_template('index.html')
 
-@website.route('/', methods=["POST"])
+@website.route('/', methods=['POST'])
 def form_post():
-    user = request.form["username"]
-    folder = request.form["folder"]
-    num = request.form["num"]
-
     auth = apiExercise.authorise_twitter_api()
     api = apiExercise.tweepy.API(auth, wait_on_rate_limit=True)
-
+        
     try:
+        user = request.form['username']
+        folder = request.form['output']
+        num = int(request.form['num'])
+
         isValid = apiExercise.download_images(api, user, num, folder, 1)
+        print(user, num, folder)
         
     except Exception as e:
         print(str(e))
 
     else:
         if (isValid):
-            apiExercise.doAnalysis("output")
-            print("Program successful!")
-        else:
-            print("Unable to complete program with selected twitter handle. Please try again.")
+            apiExercise.doAnalysis(folder)
+    return redirect(url_for('cat'))
 
-    return redirect(url_for('submit'))
-
-@website.route('/submit')
-def submit():
+@website.route('/submission')
+def cat():
     with open("labels.json") as outfile:
         lines = json.loads(outfile.read())
 
     return render_template("output.html")
 
 if __name__ == "__main__":
-    website.run()
+    website.run(host="0.0.0.0", port=8080, threaded=True)
