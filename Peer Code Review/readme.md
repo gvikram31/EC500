@@ -21,4 +21,4 @@ The code review has been finished. All review comments regarding the API are und
 Program performance is synchronous. All correctly labelled descriptions are written to terminal and file after the images are downloaded and the video has been made. 
 
 ## Website
-Although I created website to embed the classmate's code but turned out that everything is hard-fixed and I have to edit his code each time for different operation which didn't allow me to use his code in the website.
+Although I created website to embed the classmate's code but turned out that everything is hard-fixed and I have to edit his code each time for different operation which didn't allow me to use his code in the website. To run the app open terminal and run the main.py file also follow instruction to run the run.py as it will need authentication and twitter logins. Check the link:- https://github.com/gvikram31/EC500/tree/master/Assignment1
