@@ -7,6 +7,7 @@ Following python libraries are needed to run this project:-
 - FFMPEG(Command for Linux:- sudo apt install ffmpeg)
 - Google Cloud Vision API(pip install --upgrade google-cloud-vision).
 - Pymongo 
+
 Now Tweety Google Cloud API will need your credentials to access information from your twitter account by following steps here[https://www.slickremix.com/docs/how-to-get-api-keys-and-tokens-for-twitter/].
 
 For Tweety put your credential information into run.py.

@@ -17,7 +17,7 @@ country_sort = Airports.find().sort([("country", pymongo.DESCENDING),])
 for countries in country_sort:
     print(countries["country"])
 
-# Lets dig more 
+# Lets dig more and try to find city and states in a country.
 state = Airports.find({"country": "India"})
 for states in state:
     print("Name: {}. City: {}. State: {}. ".format(states["name"], states["city"], states["state"]))
